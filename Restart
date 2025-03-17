@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Log out all non-root users
+echo "Logging out non-root users..."
+if sudo pkill -TERM -u $(who | awk '{print $1}' | grep -v '^root$'); then
+    echo "Successfully logged out non-root users."
+else
+    echo "Error: Failed to log out non-root users."
+    exit 1
+fi
+
+# Force restart the device without confirmation
+echo "Restarting the device..."
+sudo reboot
