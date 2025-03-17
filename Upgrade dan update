@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Memeriksa apakah skrip dijalankan dengan hak akses sudo
+if [ "$EUID" -ne 0 ]; then
+  echo "Silakan jalankan skrip ini dengan sudo."
+  exit 1
+fi
+
+# Memperbarui daftar paket
+echo "Memperbarui daftar paket..."
+apt update
+
+# Meningkatkan semua paket yang terinstal
+echo "Meningkatkan semua paket yang terinstal..."
+apt upgrade -y
+
+# Menghapus paket yang tidak diperlukan
+echo "Menghapus paket yang tidak diperlukan..."
+apt autoremove -y
+
+echo "Proses pembaruan dan peningkatan selesai."
