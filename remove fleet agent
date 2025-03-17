@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Hentikan layanan osquery
+sudo systemctl stop orbit.service
+sudo systemctl disable orbit.service
+
+# Hapus paket osquery
+if command -v apt &> /dev/null; then
+    sudo apt remove fleet-osquery -y
+elif command -v yum &> /dev/null; then
+    sudo yum remove fleet-osquery -y
+else
+    echo "Manajer paket tidak dikenali. Harap hapus osquery secara manual."
+    exit 1
+fi
+
+# Hapus sisa file dan konfigurasi
+sudo rm -rf /var/lib/orbit /opt/orbit /var/log/orbit /usr/local/bin/orbit /etc/default/orbit /lib/systemd/system/orbit.service /opt/orbit
+
+echo "Fleet osquery telah berhasil dihapus."
